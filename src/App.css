@@ -274,7 +274,7 @@ button:focus {
   border: 0px solid bisque;
   width: 20vmax;
   height: 20vmax;
-  font-size: 20vmax;
+  font-size: clamp(64px, 20vmax, 280px);
   margin: 0px;
   line-height: 1.1;
   margin-bottom: 20px;

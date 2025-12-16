@@ -212,7 +212,7 @@ button:focus {
   align-content: stretch;
   background-color: transparent;
   border-radius: 20px;
-  border: 20px dotted bisque;
+  border: 10px dashed bisque;
 }
 .row {
   display: flex;

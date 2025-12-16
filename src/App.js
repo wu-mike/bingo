@@ -18,12 +18,19 @@ function App() {
         setShowSelector(true);
       }else if(page ==="2025christmasbingo"){
         const url = new URL(window.location.href);
-        url.searchParams.delete('page');
+        url.searchParams.set('page', 'home');
         window.history.replaceState(null, '', url.href);
         setShow(true);
       }
     }
   }, []); 
+
+  const clickShowBoard = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('page', 'board');
+    window.history.replaceState(null, '', url.href);
+    setShowBoard(true);
+  }
 
   return (
     <div className="column-center">
@@ -38,9 +45,7 @@ function App() {
             <div>
               <button
                 style={{ marginLeft: "5px" }}
-                onClick={() => {
-                  setShowBoard(true);
-                }}
+                onClick={clickShowBoard}
               >
                 <span>Play</span>
               </button>

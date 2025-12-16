@@ -1,16 +1,75 @@
 import { useEffect, useState } from "react";
 import { data } from "../data/index";
 const emojis = [...data];
+const findBingo = (m) => {
+  let selected = 0;
+
+  for (let i = 0; i < 5; ++i) {
+    selected = 0;
+    for (let j = 0; j < 5; ++j) {
+      let element = m[i][j];
+      if (element.selected) {
+        selected += 1;
+      }
+    }
+    if (selected === 5) {
+      return true;
+    }
+  }
+
+  for (let i = 0; i < 5; ++i) {
+    selected = 0;
+    for (let j = 0; j < 5; ++j) {
+      let element = m[j][i];
+      if (element.selected) {
+        selected += 1;
+      }
+    }
+    if (selected === 5) {
+      return true;
+    }
+  }
+
+  selected = 0;
+  for (let j = 0; j < 5; ++j) {
+    let element = m[j][j];
+    if (element.selected) {
+      selected += 1;
+    }
+  }
+  if (selected === 5) {
+    return true;
+  }
+
+  selected = 0;
+  for (let j = 0; j < 5; ++j) {
+    let element = m[j][4 - j];
+    if (element.selected) {
+      selected += 1;
+    }
+  }
+  if (selected === 5) {
+    return true;
+  }
+
+  return false;
+};
 
 function Board() {
   const [matrix, setMatrix] = useState([]);
-
-  const handleBeforeUnload = (event) => {
-    event.preventDefault();
-    event.returnValue = "";
-  };
+  const [showMessage, setShowMessage] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      // For legacy support
+      e.returnValue = ''; 
+      return '';
+    };
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
@@ -46,31 +105,42 @@ function Board() {
       }
       return row;
     });
-
     setMatrix(newMatrix);
+    if (findBingo(newMatrix)) {
+      setShowMessage(true);
+    }
   };
 
-  return (
-    <div id="board" className="board">
-      {matrix.map((row, ii) => (
-        <div className="row" key={ii}>
-          {row.map((item, jj) => (
-            <div
-              className="emoji-container"
-              key={`${ii}-${jj}`}
-              onClick={() => {
-                selectEmoji(ii, jj);
-              }}
-            >
-              <p id={`${ii}-${jj}`} className={`emoji ${item.selected && "emoji-spin"}`}>
-                {item.emoji}
-              </p>
-              {item.selected && <div className="dot">&nbsp;</div>}
-            </div>
-          ))}
+  return loading ? (
+    <span class="loader"></span>
+  ) : (
+    <>
+      <div id="board" className="board">
+        {matrix.map((row, ii) => (
+          <div className="row" key={ii}>
+            {row.map((item, jj) => (
+              <div
+                className="emoji-container"
+                key={`${ii}-${jj}`}
+                onClick={() => {
+                  selectEmoji(ii, jj);
+                }}
+              >
+                <p id={`${ii}-${jj}`} className={`emoji ${item.selected && "emoji-spin"}`}>
+                  {item.emoji}
+                </p>
+                {item.selected && <div className="dot">&nbsp;</div>}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      {showMessage && (
+        <div onClick={() => setShowMessage(false)} class="message">
+          <div class="message-text">BINGO!</div>
         </div>
-      ))}
-    </div>
+      )}
+    </>
   );
 }
 

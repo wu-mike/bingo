@@ -3,39 +3,6 @@ import "./App.css";
 import Board from "./components/Board";
 import Selector from "./components/Selector";
 
-const emojis = [
-  "🏀",
-  "👽",
-  "🍭",
-  "🤖",
-  "👍",
-  "🎩",
-  "👢",
-  "🐨",
-  "💀",
-  "🐬",
-  "👣",
-  "🌴",
-  "🌚",
-  "🔥",
-  "🍅",
-  "🍕",
-  "🐒",
-  "🚀",
-  "🎉",
-  "🎮",
-  "🍄",
-  "👏",
-  "🐧",
-  "🐶",
-  "🐸",
-  "🌈",
-  "⭐️",
-  "🍎",
-  "💣",
-  "💥",
-];
-
 function App() {
   const [showBoard, setShowBoard] = useState(false);
   const [showSelector, setShowSelector] = useState(false);
@@ -68,9 +35,9 @@ function App() {
           </div>
         </>
       ) : showBoard ? (
-        <Board emojis={emojis} />
+        <Board />
       ) : (
-        <Selector emojis={emojis} />
+        <Selector />
       )}
     </div>
   );

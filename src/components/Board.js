@@ -112,7 +112,7 @@ function Board() {
   };
 
   return loading ? (
-    <span class="loader"></span>
+    <span className="loader"></span>
   ) : (
     <>
       <div id="board" className="board">
@@ -136,8 +136,8 @@ function Board() {
         ))}
       </div>
       {showMessage && (
-        <div onClick={() => setShowMessage(false)} class="message">
-          <div class="message-text">BINGO!</div>
+        <div onClick={() => setShowMessage(false)} className="message">
+          <div className="message-text">BINGO!</div>
         </div>
       )}
     </>

@@ -4,6 +4,7 @@ import Board from "./components/Board";
 import Selector from "./components/Selector";
 
 function App() {
+  const [show, setShow] = useState(false);
   const [showBoard, setShowBoard] = useState(false);
   const [showSelector, setShowSelector] = useState(false);
 
@@ -11,27 +12,30 @@ function App() {
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     const page = params.get('page');
-    if(page && page === "host"){
-      setShowSelector(true);
+    if(page){
+      if(page === "host") {
+        setShow(true);
+        setShowSelector(true);
+      }else if(page ==="2025christmasbingo"){
+        const url = new URL(window.location.href);
+        url.searchParams.delete('page');
+        window.history.replaceState(null, '', url.href);
+        setShow(true);
+      }
     }
   }, []); 
 
   return (
     <div className="column-center">
-      {!showBoard && !showSelector ? (
+      {!show ? (<div className="message">
+          <div className="message-text">Please rescan <br/> QR code.</div>
+        </div>) : !showBoard && !showSelector ? (
         <>
           <div className="logo logo-border-animation">
             <div className="logo-text">Xmas Bingo</div>
           </div>
           <div className="buttons">
             <div>
-              {/* <button
-                onClick={() => {
-                  setShowSelector(true);
-                }}
-              >
-                <span>Host</span>
-              </button> */}
               <button
                 style={{ marginLeft: "5px" }}
                 onClick={() => {

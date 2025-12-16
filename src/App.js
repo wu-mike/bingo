@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Board from "./components/Board";
 import Selector from "./components/Selector";
@@ -6,6 +6,15 @@ import Selector from "./components/Selector";
 function App() {
   const [showBoard, setShowBoard] = useState(false);
   const [showSelector, setShowSelector] = useState(false);
+
+  useEffect(() => {
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    const page = params.get('page');
+    if(page && page === "host"){
+      setShowSelector(true);
+    }
+  }, []); 
 
   return (
     <div className="column-center">
@@ -16,13 +25,13 @@ function App() {
           </div>
           <div className="buttons">
             <div>
-              <button
+              {/* <button
                 onClick={() => {
                   setShowSelector(true);
                 }}
               >
                 <span>Host</span>
-              </button>
+              </button> */}
               <button
                 style={{ marginLeft: "5px" }}
                 onClick={() => {

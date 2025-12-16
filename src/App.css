@@ -211,8 +211,8 @@ button:focus {
   align-items: center;
   align-content: stretch;
   background-color: transparent;
-  border-radius: 20px;
-  border: 10px dashed bisque;
+  border-radius: 10px;
+  border: 8px solid bisque;
 }
 .row {
   display: flex;
